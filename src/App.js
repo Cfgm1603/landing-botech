@@ -1,25 +1,44 @@
-import logo from './logo.svg';
-import './App.css';
+import { Navbar } from "./components/Navbar";
+import { Hero } from "./components/Hero";
+import { ImageDashboard } from "./components/ImageDashboard";
+import { Footer } from "./components/Footer";
+import CardSwap, { Card } from './components/CardSwap'
 
-function App() {
+
+
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div 
+      className="min-h-screen"
+      style={{
+        background: `linear-gradient(to bottom right, #ffffff, rgba(var(--color-primary-botech-rgb), 0.05), rgba(var(--color-primary-botech-rgb), 0.15))`
+      }}
+    >
+      <Navbar />
+      <Hero />
+      <ImageDashboard />
+      <div style={{ height: '600px', position: 'relative' }}>
+  <CardSwap
+    cardDistance={60}
+    verticalDistance={70}
+    delay={5000}
+    pauseOnHover={false}
+  >
+    <Card>
+      <h3>Card 1</h3>
+      <p>Your content here</p>
+    </Card>
+    <Card>
+      <h3>Card 2</h3>
+      <p>Your content here</p>
+    </Card>
+    <Card>
+      <h3>Card 3</h3>
+      <p>Your content here</p>
+    </Card>
+  </CardSwap>
+</div>
+      <Footer />
     </div>
   );
 }
-
-export default App;
