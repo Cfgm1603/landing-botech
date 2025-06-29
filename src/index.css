@@ -21,3 +21,120 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/* Mejoras de responsividad */
+* {
+  box-sizing: border-box;
+}
+
+/* Mejorar el scroll en dispositivos táctiles */
+html {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Prevenir zoom en inputs en iOS */
+input, textarea, select {
+  font-size: 16px;
+}
+
+/* Mejorar la interacción táctil */
+button, a {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+/* Mejorar el comportamiento de las imágenes */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Utilidades responsive adicionales */
+@media (max-width: 640px) {
+  .text-responsive-lg {
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+  }
+  
+  .text-responsive-xl {
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+  }
+  
+  .text-responsive-2xl {
+    font-size: 2.5rem;
+    line-height: 1;
+  }
+}
+
+/* Mejorar el spacing en móviles */
+@media (max-width: 640px) {
+  .mobile-padding {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  .mobile-margin {
+    margin-left: 1rem;
+    margin-right: 1rem;
+  }
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Mejorar el contraste para accesibilidad */
+@media (prefers-contrast: high) {
+  .text-white\/80 {
+    color: rgba(255, 255, 255, 0.95);
+  }
+  
+  .text-white\/60 {
+    color: rgba(255, 255, 255, 0.8);
+  }
+}
+
+/* Animaciones más suaves para usuarios que prefieren menos movimiento */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Mejoras para el menú hamburguesa */
+.hamburger-menu {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Mejoras para el scroll horizontal en desktop */
+@media (min-width: 768px) {
+  .horizontal-scroll {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  
+  .horizontal-scroll::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Mejoras para focus visible */
+.focus-visible {
+  outline: 2px solid var(--color-primary-botech);
+  outline-offset: 2px;
+}
+
+/* Mejoras para el backdrop blur en navegadores que no lo soporten */
+@supports not (backdrop-filter: blur(12px)) {
+  .backdrop-blur-md {
+    background-color: rgba(255, 255, 255, 0.9);
+  }
+  
+  .backdrop-blur-sm {
+    background-color: rgba(255, 255, 255, 0.95);
+  }
+}

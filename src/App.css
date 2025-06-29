@@ -40,3 +40,88 @@
     transform: rotate(360deg);
   }
 }
+
+/* Estilos para el scroll horizontal */
+.horizontal-scroll-container {
+  overflow: hidden;
+  position: relative;
+  height: 100vh;
+}
+
+.horizontal-scroll-wrapper {
+  display: flex;
+  will-change: transform;
+  height: 100%;
+  align-items: center;
+}
+
+/* Prevenir scroll en dispositivos móviles durante la animación */
+body.scroll-locked {
+  overflow: hidden;
+  height: 100vh;
+}
+
+/* Estilos para paneles horizontales */
+.horizontal-scroll-panel {
+  flex-shrink: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+/* Mejoras para mobile */
+@media (max-width: 768px) {
+  .horizontal-scroll-panel {
+    padding: 1rem !important;
+  }
+  
+  .mobile-dashboard-frame {
+    max-width: 280px;
+    margin: 0 auto;
+  }
+  
+  .features-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+  }
+}
+
+/* Animaciones suaves */
+.dashboard-image {
+  transition: transform 0.3s ease;
+}
+
+.dashboard-image:hover {
+  transform: scale(1.02);
+}
+
+/* Indicador de scroll */
+.scroll-indicator {
+  position: fixed;
+  top: 50%;
+  right: 2rem;
+  transform: translateY(-50%);
+  z-index: 100;
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+
+.scroll-indicator:hover {
+  opacity: 1;
+}
+
+/* Estilos para las tarjetas de características */
+.feature-card {
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Mejoras de performance */
+.horizontal-scroll-wrapper * {
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
