@@ -1,0 +1,19 @@
+{
+  "files": {
+    "main.css": "/landing-botech/static/css/main.16fa8f29.css",
+    "main.js": "/landing-botech/static/js/main.c36a7744.js",
+    "static/js/453.51c9a3be.chunk.js": "/landing-botech/static/js/453.51c9a3be.chunk.js",
+    "static/media/Seguimiento.png": "/landing-botech/static/media/Seguimiento.862a175a922c36c04184.png",
+    "static/media/gimnasio_femenino.png": "/landing-botech/static/media/gimnasio_femenino.097f405323d21e60271d.png",
+    "static/media/colegio_campo_alegre.png": "/landing-botech/static/media/colegio_campo_alegre.f4123e5e33691dcdb11f.png",
+    "static/media/colegio_portales.png": "/landing-botech/static/media/colegio_portales.d783c3b01c987b0e0151.png",
+    "index.html": "/landing-botech/index.html",
+    "main.16fa8f29.css.map": "/landing-botech/static/css/main.16fa8f29.css.map",
+    "main.c36a7744.js.map": "/landing-botech/static/js/main.c36a7744.js.map",
+    "453.51c9a3be.chunk.js.map": "/landing-botech/static/js/453.51c9a3be.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.16fa8f29.css",
+    "static/js/main.c36a7744.js"
+  ]
+}
