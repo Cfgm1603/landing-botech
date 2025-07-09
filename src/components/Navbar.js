@@ -1,11 +1,24 @@
 import React, { useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { FiMap, FiShield, FiX, FiMenu, FiChevronDown, FiSmartphone, FiTablet, FiPhone, FiMail } from 'react-icons/fi';
 import { Button } from "./Button";
 
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAccessDropdownOpen, setIsAccessDropdownOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState('inicio'); // Track current section
+  const location = useLocation();
+  
+  // Determinar la sección activa basada en la ruta actual
+  const getActiveSection = () => {
+    const path = location.pathname;
+    if (path === '/') return 'inicio';
+    if (path === '/acerca-de') return 'acerca-de';
+    if (path === '/contactanos') return 'contactanos';
+    if (path === '/tutoriales') return 'tutoriales';
+    return 'inicio';
+  };
+  
+  const activeSection = getActiveSection();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -20,42 +33,50 @@ export function Navbar() {
   };
 
   const handleSectionClick = (section) => {
-    setActiveSection(section);
     closeMenu();
   };
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-white/20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+    <>
+      {/* Overlay oscuro para móvil */}
+      {isMenuOpen && (
+        <div 
+          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 md:hidden"
+          onClick={closeMenu}
+        />
+      )}
+      
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-white md:bg-white/80 backdrop-blur-md border-b border-white/20 md:border-b md:border-white/20 rounded-b-2xl md:rounded-none">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex items-center space-x-2">
-            <button 
-              onClick={() => handleSectionClick('inicio')}
+            <Link 
+              to="/"
               className="text-xl font-semibold text-primary-botech font-afacad hover:opacity-80 transition-opacity"
             >
               BO-TECH
-            </button>
+            </Link>
           </div>
 
           {/* Desktop Navigation Links */}
           <div className="hidden md:flex items-center space-x-8">
-            <button 
-              onClick={() => handleSectionClick('soluciones')}
+            <Link 
+              to="/"
               className={`flex items-center space-x-1 cursor-pointer transition-colors duration-200 relative ${
-                activeSection === 'soluciones' 
+                activeSection === 'inicio' 
                   ? 'text-primary-botech' 
                   : 'text-gray-700 hover:text-primary-botech'
               }`}
             >
-              <span>Soluciones</span>
-              {activeSection === 'soluciones' && (
+              <span>Inicio</span>
+              {activeSection === 'inicio' && (
                 <div className="absolute -bottom-1 left-0 right-0 h-0.5 bg-primary-botech rounded-full"></div>
               )}
-            </button>
+            </Link>
             
-            <button 
-              onClick={() => handleSectionClick('acerca-de')}
+            <Link 
+              to="/acerca-de"
               className={`flex items-center space-x-1 cursor-pointer transition-colors duration-200 relative ${
                 activeSection === 'acerca-de' 
                   ? 'text-primary-botech' 
@@ -66,10 +87,10 @@ export function Navbar() {
               {activeSection === 'acerca-de' && (
                 <div className="absolute -bottom-1 left-0 right-0 h-0.5 bg-primary-botech rounded-full"></div>
               )}
-            </button>
+            </Link>
             
-            <button 
-              onClick={() => handleSectionClick('contactanos')}
+            <Link 
+              to="/contactanos"
               className={`flex items-center space-x-1 cursor-pointer transition-colors duration-200 relative ${
                 activeSection === 'contactanos' 
                   ? 'text-primary-botech' 
@@ -80,10 +101,10 @@ export function Navbar() {
               {activeSection === 'contactanos' && (
                 <div className="absolute -bottom-1 left-0 right-0 h-0.5 bg-primary-botech rounded-full"></div>
               )}
-            </button>
+            </Link>
             
-            <button 
-              onClick={() => handleSectionClick('tutoriales')}
+            <Link 
+              to="/tutoriales"
               className={`flex items-center space-x-1 cursor-pointer transition-colors duration-200 relative ${
                 activeSection === 'tutoriales' 
                   ? 'text-primary-botech' 
@@ -94,7 +115,7 @@ export function Navbar() {
               {activeSection === 'tutoriales' && (
                 <div className="absolute -bottom-1 left-0 right-0 h-0.5 bg-primary-botech rounded-full"></div>
               )}
-            </button>
+            </Link>
           </div>
 
           {/* Desktop Access Dropdown */}
@@ -116,11 +137,12 @@ export function Navbar() {
               {isAccessDropdownOpen && (
                 <div className="absolute right-0 mt-2 w-64 bg-white/95 backdrop-blur-md rounded-xl shadow-2xl border border-white/20 py-2 z-50">
                   <div className="px-4 py-2 border-b border-gray-100">
-                    <h3 className="text-sm font-semibold text-gray-900">Cuenta de Cloud</h3>
+                    <h3 className="text-sm font-semibold text-gray-900">Acceso a sistemas</h3>
                   </div>
                   
                   <a 
-                    href="#" 
+                    href="https://botech.com.co/seguimiento/" 
+                    target="_blank"
                     className="flex items-center space-x-3 px-4 py-3 text-white hover:bg-primary-botech/10 transition-colors bg-primary-botech mx-2 my-1 rounded-lg"
                   >
                     <FiMap className="w-5 h-5" />
@@ -128,7 +150,8 @@ export function Navbar() {
                   </a>
                   
                   <a 
-                    href="#" 
+                    href="https://botech.com.co/pass/login" 
+                    target="_blank"
                     className="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-50 transition-colors mx-2 my-1 rounded-lg border border-gray-200"
                   >
                     <FiShield className="w-5 h-5" />
@@ -140,7 +163,8 @@ export function Navbar() {
                   </div>
                   
                   <a 
-                    href="#" 
+                    href="https://apps.apple.com/co/app/bo-tech-tracking/id6502615797"
+                    target="_blank"
                     className="flex items-center space-x-3 px-4 py-3 text-white hover:bg-primary-botech transition-colors bg-primary-botech mx-2 my-1 rounded-lg"
                   >
                     <FiSmartphone className="w-5 h-5" />
@@ -148,7 +172,8 @@ export function Navbar() {
                   </a>
                   
                   <a 
-                    href="#" 
+                    href="https://play.google.com/store/apps/details?id=com.botech.tracking&hl=es" 
+                    target="_blank"
                     className="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-50 transition-colors mx-2 my-1 rounded-lg border border-gray-200"
                   >
                     <FiTablet className="w-5 h-5" />
@@ -189,98 +214,97 @@ export function Navbar() {
             ? 'max-h-screen opacity-100' 
             : 'max-h-0 opacity-0'
         } overflow-hidden`}>
-          <div className="px-2 pt-2 pb-3 space-y-1 bg-white/95 backdrop-blur-sm rounded-b-lg border border-white/20 mt-2">
+          <div className="px-4 py-4 space-y-2 bg-white/95 backdrop-blur-md rounded-b-lg border border-white/20 mt-2 shadow-2xl">
             {/* Mobile Navigation Links */}
-            <button 
-              onClick={() => handleSectionClick('inicio')}
-              className={`w-full text-left px-3 py-3 rounded-lg transition-all duration-200 ${
-                activeSection === 'inicio'
-                  ? 'bg-primary-botech text-white font-medium'
-                  : 'text-gray-700 hover:text-primary-botech hover:bg-gray-50'
-              }`}
-            >
-              <span>Inicio</span>
-            </button>
-            
-            <button 
-              onClick={() => handleSectionClick('soluciones')}
-              className={`w-full text-left px-3 py-3 rounded-lg transition-all duration-200 ${
-                activeSection === 'soluciones'
-                  ? 'bg-primary-botech text-white font-medium'
-                  : 'text-gray-700 hover:text-primary-botech hover:bg-gray-50'
-              }`}
-            >
-              <span>Soluciones</span>
-            </button>
-            
-            <button 
-              onClick={() => handleSectionClick('acerca-de')}
-              className={`w-full text-left px-3 py-3 rounded-lg transition-all duration-200 ${
-                activeSection === 'acerca-de'
-                  ? 'bg-primary-botech text-white font-medium'
-                  : 'text-gray-700 hover:text-primary-botech hover:bg-gray-50'
-              }`}
-            >
-              <span>Acerca de</span>
-            </button>
-            
-            <button 
-              onClick={() => handleSectionClick('contactanos')}
-              className={`w-full text-left px-3 py-3 rounded-lg transition-all duration-200 ${
-                activeSection === 'contactanos'
-                  ? 'bg-primary-botech text-white font-medium'
-                  : 'text-gray-700 hover:text-primary-botech hover:bg-gray-50'
-              }`}
-            >
-              <span>Contáctanos</span>
-            </button>
-            
-            <button 
-              onClick={() => handleSectionClick('tutoriales')}
-              className={`w-full text-left px-3 py-3 rounded-lg transition-all duration-200 ${
-                activeSection === 'tutoriales'
-                  ? 'bg-primary-botech text-white font-medium'
-                  : 'text-gray-700 hover:text-primary-botech hover:bg-gray-50'
-              }`}
-            >
-              <span>Tutoriales</span>
-            </button>
+            <div className="space-y-2">
+              <Link 
+                to="/"
+                onClick={closeMenu}
+                className={`block w-full text-left px-4 py-3 rounded-lg transition-all duration-200 ${
+                  activeSection === 'inicio'
+                    ? 'bg-primary-botech text-white font-medium'
+                    : 'text-gray-700 hover:text-primary-botech hover:bg-gray-50'
+                }`}
+              >
+                <span>Inicio</span>
+              </Link>
+              
+              <Link 
+                to="/acerca-de"
+                onClick={closeMenu}
+                className={`block w-full text-left px-4 py-3 rounded-lg transition-all duration-200 ${
+                  activeSection === 'acerca-de'
+                    ? 'bg-primary-botech text-white font-medium'
+                    : 'text-gray-700 hover:text-primary-botech hover:bg-gray-50'
+                }`}
+              >
+                <span>Acerca de</span>
+              </Link>
+              
+              <Link 
+                to="/contactanos"
+                onClick={closeMenu}
+                className={`block w-full text-left px-4 py-3 rounded-lg transition-all duration-200 ${
+                  activeSection === 'contactanos'
+                    ? 'bg-primary-botech text-white font-medium'
+                    : 'text-gray-700 hover:text-primary-botech hover:bg-gray-50'
+                }`}
+              >
+                <span>Contáctanos</span>
+              </Link>
+              
+              <Link 
+                to="/tutoriales"
+                onClick={closeMenu}
+                className={`block w-full text-left px-4 py-3 rounded-lg transition-all duration-200 ${
+                  activeSection === 'tutoriales'
+                    ? 'bg-primary-botech text-white font-medium'
+                    : 'text-gray-700 hover:text-primary-botech hover:bg-gray-50'
+                }`}
+              >
+                <span>Tutoriales</span>
+              </Link>
+            </div>
 
             {/* Mobile Access Section */}
             <div className="pt-4 border-t border-gray-200">
-              <h3 className="px-3 py-2 text-sm font-semibold text-gray-900">Acceso</h3>
+              <h3 className="px-4 py-2 text-sm font-semibold text-gray-900">Acceso</h3>
               
-              <div className="space-y-1">
-                <p className="px-3 py-1 text-xs text-gray-600">Cuenta de Cloud</p>
+              <div className="space-y-2">
+                <p className="px-4 py-1 text-xs text-gray-600">Cuenta de Cloud</p>
                 <a 
-                  href="#" 
-                  className="flex items-center space-x-3 px-3 py-3 text-white bg-primary-botech hover:bg-primary-botech transition-colors rounded-lg mx-2"
+                  href="https://botech.com.co/seguimiento/" 
+                  target="_blank"
+                  className="flex items-center space-x-3 px-4 py-3 text-white bg-primary-botech hover:bg-primary-botech transition-colors rounded-lg"
                   onClick={closeMenu}
                 >
                   <FiMap className="w-5 h-5" />
                   <span>Inicio Seguimiento</span>
                 </a>
                 <a 
-                  href="#" 
-                  className="flex items-center space-x-3 px-3 py-3 text-gray-700 hover:bg-gray-50 transition-colors rounded-lg mx-2 border border-gray-200"
+                  href="https://botech.com.co/pass/login" 
+                  target="_blank"
+                  className="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-50 transition-colors rounded-lg border border-gray-200"
                   onClick={closeMenu}
                 >
                   <FiShield className="w-5 h-5" />
                   <span>Inicio PASS</span>
                 </a>
                 
-                <p className="px-3 py-1 text-xs text-gray-600 pt-2">Aplicación</p>
+                <p className="px-4 py-1 text-xs text-gray-600 pt-2">Aplicación</p>
                 <a 
-                  href="#" 
-                  className="flex items-center space-x-3 px-3 py-3 text-white bg-primary-botech hover:bg-primary-botech transition-colors rounded-lg mx-2"
+                  href="https://apps.apple.com/co/app/bo-tech-tracking/id6502615797"
+                  target="_blank"
+                  className="flex items-center space-x-3 px-4 py-3 text-white bg-primary-botech hover:bg-primary-botech transition-colors rounded-lg"
                   onClick={closeMenu}
                 >
                   <FiSmartphone className="w-5 h-5" />
                   <span>iOS</span>
                 </a>
                 <a 
-                  href="#" 
-                  className="flex items-center space-x-3 px-3 py-3 text-gray-700 hover:bg-gray-50 transition-colors rounded-lg mx-2 border border-gray-200"
+                  href="https://play.google.com/store/apps/details?id=com.botech.tracking&hl=es" 
+                  target="_blank"
+                  className="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-50 transition-colors rounded-lg border border-gray-200"
                   onClick={closeMenu}
                 >
                   <FiTablet className="w-5 h-5" />
@@ -300,5 +324,6 @@ export function Navbar() {
         />
       )}
     </nav>
+    </>
   );
 } 
