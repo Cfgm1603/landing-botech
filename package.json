@@ -2,7 +2,7 @@
   "name": "landing-botech",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://Cfgm1603.github.io/landing-botech",
+  "homepage": "/",
   "dependencies": {
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",

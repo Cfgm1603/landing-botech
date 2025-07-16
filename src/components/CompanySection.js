@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import CardSwap, { Card } from './CardSwap';
 import { Statistics } from './Statistics';
 import { FiChevronDown, FiChevronLeft, FiChevronRight, FiX } from 'react-icons/fi';
+import ReactDOM from 'react-dom';
 
 // Datos de las tarjetas con contenido extendido (fuera del componente)
 const cardData = [
@@ -76,33 +77,36 @@ const cardSwapChildren = cardData.map((card, idx) => (
 // Modal para mostrar info extendida
 function InfoModal({ open, onClose, content }) {
   if (!open) return null;
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-      <div className="bg-white rounded-2xl shadow-2xl max-w-lg w-full p-8 relative animate-fade-in">
-        <button
-          onClick={onClose}
-          className="absolute top-4 right-4 p-2 rounded-full hover:bg-gray-100 transition-colors"
-        >
-          <FiX className="w-6 h-6 text-gray-500" />
-        </button>
-        <h2 className="text-2xl font-bold mb-4 text-primary-botech">{content.title}</h2>
-        <p className="text-gray-700 mb-4">{content.description}</p>
-        <h3 className="text-lg font-semibold mb-2">Características principales:</h3>
-        <ul className="space-y-2 mb-2">
-          {content.features.map((feature, idx) => (
-            <li key={idx} className="flex items-start space-x-2">
-              <div className="w-2 h-2 bg-primary-botech rounded-full mt-2 flex-shrink-0"></div>
-              <span className="text-gray-700">{feature}</span>
-            </li>
-          ))}
-        </ul>
+  return ReactDOM.createPortal(
+    (
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+        <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md md:max-w-2xl p-6 md:p-10 relative animate-fade-in mx-4">
+          <button
+            onClick={onClose}
+            className="absolute top-4 right-4 p-2 rounded-full hover:bg-gray-100 transition-colors"
+          >
+            <FiX className="w-6 h-6 text-gray-500" />
+          </button>
+          <h2 className="text-2xl font-bold mb-4 text-primary-botech">{content.title}</h2>
+          <p className="text-gray-700 mb-4">{content.description}</p>
+          <h3 className="text-lg font-semibold mb-2">Características principales:</h3>
+          <ul className="space-y-2 mb-2">
+            {content.features.map((feature, idx) => (
+              <li key={idx} className="flex items-start space-x-2">
+                <div className="w-2 h-2 bg-primary-botech rounded-full mt-2 flex-shrink-0"></div>
+                <span className="text-gray-700">{feature}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
-    </div>
+    ),
+    document.body
   );
 }
 
 // Componente de carrusel mejorado para mobile
-function MobileCarousel({ cardData, onCardChange, activeCardIndex, width }) {
+function MobileCarousel({ cardData, onCardChange, activeCardIndex, width, onShowDetails }) {
   const [currentIndex, setCurrentIndex] = useState(activeCardIndex);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const carouselRef = useRef(null);
@@ -232,6 +236,13 @@ function MobileCarousel({ cardData, onCardChange, activeCardIndex, width }) {
                   <span className="text-sm font-semibold text-white">{card.status}</span>
                   <div className={`w-2 h-2 rounded-full animate-pulse ${card.indicatorColor}`}></div>
                 </div>
+                {/* Botón para ver detalles en mobile */}
+                <button
+                  className="mt-4 w-full bg-white text-primary-botech font-semibold py-2 px-4 rounded-lg shadow hover:bg-primary-botech hover:text-white transition-colors duration-200 text-sm"
+                  onClick={() => onShowDetails(index)}
+                >
+                  Ver más
+                </button>
               </div>
             </div>
           ))}
@@ -280,17 +291,6 @@ function MobileCarousel({ cardData, onCardChange, activeCardIndex, width }) {
           <FiChevronRight className="w-5 h-5 text-gray-600" />
         </button>
       </div>
-
-      {/* Botón de ver texto dinámico */}
-      <div className="flex justify-center mt-6">
-        <button
-          onClick={scrollToTextSection}
-          className="flex items-center space-x-2 bg-primary-botech hover:bg-primary-botech/90 text-white px-6 py-3 rounded-lg transition-all duration-200 transform hover:scale-105"
-        >
-          <span className="font-medium">Ver detalles</span>
-          <FiChevronDown className="w-4 h-4 animate-bounce" />
-        </button>
-      </div>
     </div>
   );
 }
@@ -330,6 +330,7 @@ function DesktopControls({ onNext, onPrev, activeIndex, totalCards }) {
 export function CompanySection({ width, cardConfig }) {
   const [modalOpen, setModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState(null);
+  const [mobileModalIndex, setMobileModalIndex] = useState(null);
 
   // Manejar click en tarjeta (solo desktop)
   const handleCardClick = useCallback((idx) => {
@@ -339,8 +340,27 @@ export function CompanySection({ width, cardConfig }) {
     }
   }, [width]);
 
+  // Mobile: mostrar modal con detalles
+  const handleShowMobileDetails = (idx) => {
+    setModalContent(cardData[idx].extendedContent);
+    setModalOpen(true);
+  };
+
   // Mobile: igual que antes
   const handleCardChange = useCallback(() => {}, []);
+
+  // Ajustar margen extra para el contenedor según el ancho de pantalla
+  let extraMargin;
+  if (width < 1100) {
+    extraMargin = 40; // menos margen para pantallas ~1035px
+  } else if (width < 1240) {
+    extraMargin = 60; // margen estándar para tablet y desktop medio
+  } else {
+    extraMargin = 100; // desktop grande
+  }
+
+  // Desplazamiento horizontal suave solo en pantallas anchas
+  const translateXPercent = width < 1240 ? 0 : 5;
 
   return (
     <section className="py-16 md:py-24 px-4 sm:px-6 lg:px-8">
@@ -352,9 +372,9 @@ export function CompanySection({ width, cardConfig }) {
             {width >= 768 ? (
               <div className="relative w-full h-full flex items-center justify-center" style={{ height: '600px' }}>
                 <div className="relative" style={{ 
-                  width: `${cardConfig.width + 100}px`, 
-                  height: `${cardConfig.height + 100}px`,
-                  transform: 'translateY(15%) translateX(5%)'
+                  width: `${cardConfig.width + extraMargin}px`, 
+                  height: `${cardConfig.height + extraMargin}px`,
+                  transform: `translateY(15%) translateX(${translateXPercent}%)`
                 }}>
                   <CardSwap
                     width={cardConfig.width}
@@ -377,8 +397,10 @@ export function CompanySection({ width, cardConfig }) {
                   cardData={cardData} 
                   onCardChange={handleCardChange}
                   activeCardIndex={0}
-                  width={width} 
+                  width={width}
+                  onShowDetails={handleShowMobileDetails}
                 />
+                <InfoModal open={modalOpen} onClose={() => setModalOpen(false)} content={modalContent || { title: '', description: '', features: [] }} />
               </div>
             )}
           </div>

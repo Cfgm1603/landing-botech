@@ -10,26 +10,46 @@ export function Home() {
   
   // Configuración responsive para las cards
   const getCardConfig = () => {
-    if (width < 768) {
+    // Mobile – very small devices
+    if (width < 576) {
       return {
-        width: 280,
-        height: 210,
-        cardDistance: 35,
-        verticalDistance: 45,
+        width: 320,
+        height: 240,
+        cardDistance: 45,
+        verticalDistance: 55,
       };
+    // Mobile – large phones / small tablets (e.g., 576-767)
+    } else if (width < 768) {
+      const dynamicWidth = Math.min( Math.round(width * 0.85), 380 );
+      return {
+        width: dynamicWidth,
+        height: Math.round(dynamicWidth * 0.75),
+        cardDistance: 50,
+        verticalDistance: 60,
+      };
+    // Tablet – 768-1023
     } else if (width < 1024) {
       return {
-        width: 350,
-        height: 260,
-        cardDistance: 50,
-        verticalDistance: 60,
+        width: 420,
+        height: 320,
+        cardDistance: 60,
+        verticalDistance: 70,
       };
+    // Small desktop / iPad Pro width (1024-1279)
+    } else if (width < 1280) {
+      return {
+        width: 450,
+        height: 340,
+        cardDistance: 60,
+        verticalDistance: 70,
+      };
+    // ≥1280 – large desktop
     } else {
       return {
-        width: 400,
-        height: 300,
-        cardDistance: 50,
-        verticalDistance: 60,
+        width: 500,
+        height: 380,
+        cardDistance: 60,
+        verticalDistance: 70,
       };
     }
   };

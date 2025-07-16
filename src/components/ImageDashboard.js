@@ -2,6 +2,8 @@ import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Seguimiento from '../img/Seguimiento.png';
+import Mac from '../img/Mac.png';
+import Iphone from '../img/Iphone.png';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -85,32 +87,36 @@ export function ImageDashboard() {
           <div className="panel w-screen h-screen flex items-center justify-center">
             <div className="w-full px-2 sm:px-4 md:px-6 lg:px-8">
               <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-4 sm:mb-6 md:mb-8 text-center text-gray-900">
-                Vista Mobile
+                Mockups Mobile
               </h3>
-              <div className="flex justify-center">
-                <div className="bg-gray-900 rounded-3xl p-2 sm:p-3 md:p-4 shadow-2xl w-full max-w-sm sm:max-w-md md:max-w-lg">
-                  <div className="bg-white rounded-2xl overflow-hidden relative">
-                    {/* Simulación de notch de iPhone */}
-                    <div className="bg-black h-4 sm:h-5 md:h-6 w-24 sm:w-28 md:w-32 rounded-b-xl mx-auto relative">
-                      <div className="absolute top-1 left-1/2 transform -translate-x-1/2 w-8 sm:w-10 md:w-12 h-0.5 sm:h-1 bg-gray-600 rounded-full"></div>
-                    </div>
-                    <div className="p-1 sm:p-2 md:p-3">
-                      <img 
-                        src={Seguimiento}
-                        alt="Dashboard Mobile" 
-                        className="w-full h-auto rounded-lg"
-                      />
-                    </div>
-                    {/* Simulación de home indicator */}
-                    <div className="h-3 sm:h-4 md:h-5 flex items-center justify-center">
-                      <div className="w-12 sm:w-16 md:w-20 h-0.5 sm:h-1 bg-gray-300 rounded-full"></div>
-                    </div>
+              <div className="flex flex-col md:flex-row justify-center items-end gap-3 md:gap-8 w-full">
+                {/* Mockup Seguimiento */}
+                <div className="flex flex-col items-center w-full max-w-[700px] mx-auto">
+                  <div className="h-[250px] sm:h-[350px] md:h-[500px] flex items-end w-full">
+                    <img 
+                      src={Mac}
+                      alt="Dashboard Mobile"
+                      className="h-full w-full max-w-full rounded-2xl shadow-2xl object-contain"
+                    />
                   </div>
+                  <p className="text-center text-gray-700 mt-3 text-base md:text-lg">
+                    Vista de la plataforma de seguimiento
+                  </p>
+                </div>
+                {/* Mockup Iphone */}
+                <div className="flex flex-col items-center w-full max-w-[300px] mx-auto">
+                  <div className="h-[250px] sm:h-[350px] md:h-[500px] flex items-end w-full">
+                    <img 
+                      src={Iphone}
+                      alt="Mockup iPhone"
+                      className="h-full w-full max-w-full rounded-2xl shadow-2xl object-contain"
+                    />
+                  </div>
+                  <p className="text-center text-gray-700 mt-3 text-base md:text-lg">
+                    Interfaz de la app en iPhone
+                  </p>
                 </div>
               </div>
-              <p className="text-center text-gray-600 mt-3 sm:mt-4 md:mt-6 text-sm sm:text-base md:text-lg">
-                Optimizado para dispositivos móviles
-              </p>
             </div>
           </div>
 
