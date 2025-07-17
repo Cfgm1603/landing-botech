@@ -3,6 +3,7 @@ import { Hero } from "../components/Hero";
 import { ImageDashboard } from "../components/ImageDashboard";
 import { CompanySection } from "../components/CompanySection";
 import { ClientsSection } from "../components/ClientsSection";
+import { TeamSection } from "../components/TeamSection";
 import { useWindowSize } from '../hooks/useWindowSize';
 
 export function Home() {
@@ -62,6 +63,7 @@ export function Home() {
       <ClientsSection />
       <ImageDashboard />
       <CompanySection width={width} cardConfig={cardConfig} />
+      <TeamSection />
     </>
   );
 } 

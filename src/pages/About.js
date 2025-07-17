@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { TeamSection } from '../components/TeamSection';
 export function About() {
   return (
     <div className="pt-20 min-h-screen">
@@ -58,6 +58,7 @@ export function About() {
           </div>
         </div>
       </div>
+      <TeamSection />
     </div>
   );
 } 

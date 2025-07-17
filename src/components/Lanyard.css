@@ -1,0 +1,87 @@
+.lanyard-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* Optimizaciones para diferentes dispositivos */
+@media (max-width: 576px) {
+  .lanyard-wrapper {
+    /* Extra pequeño - mejor performance */
+    transform: none;
+    will-change: auto;
+  }
+}
+
+@media (min-width: 577px) and (max-width: 768px) {
+  .lanyard-wrapper {
+    /* Móvil grande - balance entre calidad y performance */
+    transform: none;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .lanyard-wrapper {
+    /* Tablet - mejor calidad */
+    transform: none;
+  }
+}
+
+@media (min-width: 1025px) {
+  .lanyard-wrapper {
+    /* Desktop - máxima calidad */
+    transform: none;
+  }
+}
+
+/* Optimizaciones para dispositivos de alta densidad */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .lanyard-wrapper {
+    /* Limitar calidad en pantallas retina para mejor performance */
+    image-rendering: optimizeSpeed;
+  }
+}
+
+/* Estilos específicos para el modal móvil */
+.lanyard-modal-mobile {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.lanyard-modal-mobile .info-section {
+  flex-shrink: 0;
+  padding: 1rem;
+  padding-top: 4rem;
+}
+
+.lanyard-modal-mobile .lanyard-section {
+  flex: 1;
+  position: relative;
+  min-height: 0; /* Importante para flex */
+}
+
+/* Mejoras para la cuerda en móvil */
+@media (max-width: 768px) {
+  .lanyard-wrapper canvas {
+    touch-action: none; /* Evitar zoom en touch */
+  }
+}
+
+/* Optimizaciones para dispositivos con poca memoria */
+@media (max-width: 480px) {
+  .lanyard-wrapper {
+    /* Reducir calidad en dispositivos muy básicos */
+    image-rendering: pixelated;
+  }
+} 
