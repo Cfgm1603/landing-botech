@@ -5,16 +5,16 @@ export function createLanyardTexture() {
   canvas.height = 64;
   const ctx = canvas.getContext('2d');
 
-  // Color beige para la cuerda
-  const beigeColor = '#F5F5DC';
-  ctx.fillStyle = beigeColor;
+  // Color azul BO-TECH para la cuerda (fondo)
+  const blueColor = '#516ba0';
+  ctx.fillStyle = blueColor;
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-  // Agregar gradiente sutil para dar profundidad
+  // Agregar gradiente sutil para dar profundidad (invertido: más claro arriba)
   const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
-  gradient.addColorStop(0, 'rgba(255,255,255,0.2)');
+  gradient.addColorStop(0, 'rgba(255,255,255,0.10)');
   gradient.addColorStop(0.5, 'rgba(0,0,0,0.05)');
-  gradient.addColorStop(1, 'rgba(0,0,0,0.1)');
+  gradient.addColorStop(1, 'rgba(0,0,0,0.2)');
   ctx.fillStyle = gradient;
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -22,7 +22,7 @@ export function createLanyardTexture() {
   ctx.save();
   const fontSize = Math.floor(canvas.height * 0.45); // Ligeramente más pequeño
   ctx.font = `bold ${fontSize}px "Afacad", sans-serif`;
-  ctx.fillStyle = '#516ba0'; // Color azul BO-TECH
+  ctx.fillStyle = '#F5F5DC'; // Color beige para el texto
   ctx.textBaseline = 'middle';
   ctx.textAlign = 'center';
 
@@ -47,9 +47,9 @@ export function createLanyardTexture() {
     // Dibujar el texto principal
     ctx.fillText(text, x, canvas.height/2);
     
-    // Dibujar líneas decorativas entre textos
+    // Dibujar líneas decorativas entre textos (ahora beige)
     ctx.beginPath();
-    ctx.strokeStyle = 'rgba(59,130,246,0.3)'; // Color azul BO-TECH semi-transparente
+    ctx.strokeStyle = 'rgba(245,245,220,0.5)'; // Beige semi-transparente
     ctx.lineWidth = 1;
     ctx.moveTo(x - textWidth/2 - 20, canvas.height/2);
     ctx.lineTo(x - textWidth/2 - 8, canvas.height/2);
@@ -69,7 +69,7 @@ export function createLanyardTexture() {
   ctx.globalCompositeOperation = 'multiply';
   for (let y = 0; y < canvas.height; y += 4) {
     ctx.beginPath();
-    ctx.strokeStyle = 'rgba(0,0,0,0.03)';
+    ctx.strokeStyle = 'rgba(255,255,255,0.04)'; // Líneas blancas muy sutiles
     ctx.lineWidth = 2;
     ctx.moveTo(0, y);
     ctx.lineTo(canvas.width, y);
@@ -78,7 +78,7 @@ export function createLanyardTexture() {
   ctx.restore();
 
   // Agregar bordes sutiles
-  ctx.strokeStyle = 'rgba(0,0,0,0.1)';
+  ctx.strokeStyle = 'rgba(255,255,255,0.15)'; // Borde claro
   ctx.lineWidth = 1;
   ctx.strokeRect(0, 0, canvas.width, canvas.height);
 

@@ -384,10 +384,7 @@ function Band({ maxSpeed = 50, minSpeed = 0, member, windowSize }) {
       {isMobileDevice ? (
         // Versión móvil: solo tarjeta grande en la parte inferior
         <group position={[0, 3, 0]}>
-          <group
-            scale={2.5}
-            position={[0, 0, 0]}
-          >
+          
             <LanyardCard
               member={member}
               memberTexture={memberTexture}
@@ -397,7 +394,7 @@ function Band({ maxSpeed = 50, minSpeed = 0, member, windowSize }) {
               scale={2.5}
               verticalPosition={0}
             />
-          </group>
+
         </group>
       ) : (
         <>
@@ -412,7 +409,32 @@ function Band({ maxSpeed = 50, minSpeed = 0, member, windowSize }) {
             <RigidBody position={[0.9, -4, 0]} ref={j3} {...segmentProps}>
               <BallCollider args={[0.1]} />
             </RigidBody>
-            <RigidBody position={cardInitialPosition} ref={card} {...segmentProps} type={dragged ? 'kinematicPosition' : 'dynamic'}>
+            <RigidBody position={cardInitialPosition} ref={card} {...segmentProps} type={dragged ? 'kinematicPosition' : 'dynamic'}
+              onPointerDown={(e) => {
+                e.stopPropagation();
+                // Guardar la posición inicial del puntero y de la tarjeta
+                const vec3 = new THREE.Vector3();
+                vec3.set(e.point.x, e.point.y, e.point.z);
+                drag({ x: vec3.x - card.current.translation().x, y: vec3.y - card.current.translation().y, z: vec3.z - card.current.translation().z });
+                // --- FIX: Agregar listener global para pointerup ---
+                const handlePointerUp = (ev) => {
+                  drag(false);
+                  window.removeEventListener('pointerup', handlePointerUp);
+                };
+                window.addEventListener('pointerup', handlePointerUp);
+              }}
+              onPointerUp={(e) => {
+                e.stopPropagation();
+                drag(false);
+              }}
+              onPointerMove={(e) => {
+                if (dragged) {
+                  e.stopPropagation();
+                }
+              }}
+              onPointerEnter={() => hover(true)}
+              onPointerOut={() => hover(false)}
+            >
               <CuboidCollider args={[0.8, 1.125, 0.01]} />
               <LanyardCard
                 member={member}

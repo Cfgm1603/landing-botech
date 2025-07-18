@@ -63,7 +63,6 @@ export function Home() {
       <ClientsSection />
       <ImageDashboard />
       <CompanySection width={width} cardConfig={cardConfig} />
-      <TeamSection />
     </>
   );
 } 

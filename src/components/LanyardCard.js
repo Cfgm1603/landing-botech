@@ -75,6 +75,7 @@ export default function LanyardCard({ member, memberTexture, cardGeometry, isMob
             {member.skills.slice(0, 2).join(' • ')}
           </Text>
         </>
+        
       )}
       {/* Hebilla */}
       <group position={[0, 1.1, 0.02]} renderOrder={2}>

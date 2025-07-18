@@ -235,7 +235,7 @@ function LanyardModal({ member, isOpen, onClose }) {
           </div>
           {/* Lanyard - parte inferior */}
           <div className={`flex-1 relative transition-all duration-700 ${showLanyard ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}> 
-            {showLanyard && <Lanyard member={member} />}
+            <Lanyard member={member} />
           </div>
         </div>
       ) : (

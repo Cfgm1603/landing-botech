@@ -3,8 +3,13 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { FiPlay, FiDownload, FiBook, FiVideo, FiArrowLeft } from 'react-icons/fi';
 import { TutorialSection } from '../components/TutorialSection';
 import { tutorials } from './Tutorials';
+import GooglePlayImg from '../img/GooglePlay.png';
+import AppStoreImg from '../img/AppStore.svg.png';
 
 export function TutorialDetail() {
+  React.useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const { id } = useParams();
   const tutorial = tutorials.find(t => t.id === Number(id));
   const navigate = useNavigate();
@@ -62,6 +67,12 @@ export function TutorialDetail() {
                 description={section.description}
                 longDescription={section.longDescription}
                 reverse={section.reverse}
+                {...([11, 17].includes(tutorial.id) ? {
+                  appStoreLink: 'https://apps.apple.com/co/app/bo-tech-tracking/id6502615797',
+                  googlePlayLink: 'https://play.google.com/store/apps/details?id=com.botech.tracking&hl=es',
+                  appStoreImg: AppStoreImg,
+                  googlePlayImg: GooglePlayImg
+                } : {})}
               />
               <div className="w-full flex justify-center">
                 <hr className="w-2/3 border-t-2 border-gray-200" />
@@ -76,8 +87,14 @@ export function TutorialDetail() {
             <TutorialSection
               image={tutorial.image || undefined}
               title={tutorial.title}
-              description={tutorial.description}
+              description={tutorial.descriptionLong}
               longDescription={tutorial.longDescription}
+              {...([11, 17].includes(tutorial.id) ? {
+                appStoreLink: 'https://apps.apple.com/co/app/bo-tech-tracking/id6502615797',
+                  googlePlayLink: 'https://play.google.com/store/apps/details?id=com.botech.tracking&hl=es',
+                appStoreImg: AppStoreImg,
+                googlePlayImg: GooglePlayImg
+              } : {})}
             />
             <div className="w-full flex justify-center">
               <hr className="w-2/3 border-t-2 border-gray-200" />
